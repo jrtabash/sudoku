@@ -1,7 +1,7 @@
 # sudoku
 Sudoku command line utility with support for solving and generating sudoku puzzles.
 
-## Examples:
+## Examples
 ### Solve
 ```bash
 sudoku solve -p puzzles/example1.pzl
