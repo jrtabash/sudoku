@@ -13,6 +13,7 @@ sudoku generate -d medium
 ```
 
 ## Program Usage
+```bash
 Usage
         sudoku <operation> <options>
 
@@ -28,3 +29,4 @@ Options
         -p <arg> : Read input puzzle / boad from given filename (required by solve and show)
         -s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)
         -d <arg> : Generator difficulty level; one of easy, medium, hard, expert (optional with generate, default=easy)
+```
