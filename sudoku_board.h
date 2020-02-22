@@ -3,6 +3,7 @@
 
 #include <array>
 #include <ostream>
+#include <istream>
 
 namespace Sudoku {
 
@@ -25,7 +26,6 @@ namespace Sudoku {
 
         void read(std::istream & in);
         void write(std::ostream & out) const;
-        void print() const;
 
     private:
         Grid grid_ = {};

@@ -20,6 +20,7 @@ namespace Sudoku {
         void show();
 
         void save(Board const & board);
+        void print(Board const & board);
 
     private:
         Arguments args_;

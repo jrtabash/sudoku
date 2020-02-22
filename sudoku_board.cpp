@@ -1,6 +1,5 @@
 #include "sudoku_board.h"
 
-#include <iostream>
 #include <stdexcept>
 
 namespace Sudoku {
@@ -82,11 +81,6 @@ namespace Sudoku {
                 out << '\n';
             }
         }
-    }
-
-    void Board::print() const
-    {
-        write(std::cout);
     }
 
 }

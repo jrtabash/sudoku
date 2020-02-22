@@ -67,7 +67,7 @@ namespace Sudoku {
         }
 
         Solver(board).solve();
-        board.print();
+        print(board);
         save(board);
     }
 
@@ -79,7 +79,7 @@ namespace Sudoku {
 
         Board board;
         Sudoku::Generator(board, args_.difficulty()).generate();
-        board.print();
+        print(board);
         save(board);
     }
 
@@ -92,7 +92,7 @@ namespace Sudoku {
             std::cout << "Showing puzzle " << args_.puzzleFilename() << '\n' << std::endl;
         }
 
-        board.print();
+        print(board);
     }
 
     void Application::save(Board const & board)
@@ -104,6 +104,11 @@ namespace Sudoku {
             File file(args_.saveFilename());
             file.save(board, args_.replace());
         }
+    }
+
+    void Application::print(Board const & board)
+    {
+        board.write(std::cout);
     }
 
 }
