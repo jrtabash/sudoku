@@ -20,6 +20,7 @@ namespace Sudoku {
         , help_(false)
         , verbose_(false)
         , replace_(false)
+        , pretty_(false)
         , difficulty_(Generator::Difficulty::Easy)
     {
     }
@@ -35,6 +36,7 @@ namespace Sudoku {
                   << '\t' << "-h       : Print usage\n"
                   << '\t' << "-v       : Verbose mode\n"
                   << '\t' << "-f       : Force saving if file already exists\n"
+                  << '\t' << "-y       : Pretty print board\n"
                   << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
                   << '\t' << "-d <arg> : Generator difficulty level; one of " << difficultyListString() << " (optional with generate, default=" << Difficulty_Easy << ")\n"
@@ -47,6 +49,7 @@ namespace Sudoku {
             if      (arg == "-h") { help_ = true; return; }
             else if (arg == "-v") { verbose_ = true; }
             else if (arg == "-f") { replace_ = true; }
+            else if (arg == "-y") { pretty_ = true; }
             else if (arg == "-p") { puzzleFilename_ = readArg("-p", i); }
             else if (arg == "-s") { saveFilename_ = readArg("-s", i); }
             else if (arg == "-d") { difficulty_ = stringToDifficulty(readArg("-d", i)); }

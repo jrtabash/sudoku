@@ -108,7 +108,37 @@ namespace Sudoku {
 
     void Application::print(Board const & board)
     {
-        board.write(std::cout);
+        if (args_.pretty()) {
+            prettyPrint(board);
+        }
+        else {
+            board.write(std::cout);
+        }
+    }
+
+    void Application::prettyPrint(Board const & board)
+    {
+        int rowCnt = 0;
+
+        std::cout << "+-----------+-----------+-----------+\n";
+        for (auto const & row : board) {
+            for (auto const & col : row) {
+                if (col == 0) {
+                    std::cout << "|   ";
+                }
+                else {
+                    std::cout << "| " << col << ' ';
+                }
+            }
+            std::cout << "|\n";
+            if ((++rowCnt % board.blocks()) == 0) {
+                std::cout << "+-----------+-----------+-----------+\n";
+            }
+            else {
+                std::cout << "|-----------------------------------|\n";
+            }
+        }
+        std::cout.flush();
     }
 
 }

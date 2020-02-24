@@ -21,6 +21,7 @@ namespace Sudoku {
 
         void save(Board const & board);
         void print(Board const & board);
+        void prettyPrint(Board const & board);
 
     private:
         Arguments args_;

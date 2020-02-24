@@ -22,6 +22,9 @@ namespace Sudoku {
         inline Row const & operator[](int idx) const;
         inline Row & operator[](int idx);
 
+        inline Grid::const_iterator begin() const noexcept;
+        inline Grid::const_iterator end() const noexcept;
+
         bool isAllowed(std::size_t row, std::size_t col, int letter) const;
 
         void read(std::istream & in);
@@ -42,6 +45,16 @@ namespace Sudoku {
     inline Board::Row & Board::operator[](int idx)
     {
         return grid_[idx];
+    }
+
+    inline Board::Grid::const_iterator Board::begin() const noexcept
+    {
+        return grid_.begin();
+    }
+
+    inline Board::Grid::const_iterator Board::end() const noexcept
+    {
+        return grid_.end();
     }
 
 }

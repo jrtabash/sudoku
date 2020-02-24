@@ -28,6 +28,7 @@ namespace Sudoku {
         inline bool help() const noexcept;
         inline bool verbose() const noexcept;
         inline bool replace() const noexcept;
+        inline bool pretty() const noexcept;
         
         inline std::string const & puzzleFilename() const noexcept;
         inline std::string const & saveFilename() const noexcept;
@@ -55,6 +56,7 @@ namespace Sudoku {
         bool help_;
         bool verbose_;
         bool replace_;
+        bool pretty_;
         std::string puzzleFilename_;
         std::string saveFilename_;
         std::string operation_;
@@ -77,6 +79,11 @@ namespace Sudoku {
     inline bool Arguments::replace() const noexcept
     {
         return replace_;
+    }
+
+    inline bool Arguments::pretty() const noexcept
+    {
+        return pretty_;
     }
 
     inline std::string const & Arguments::puzzleFilename() const noexcept
