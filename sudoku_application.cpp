@@ -120,8 +120,9 @@ namespace Sudoku {
     {
         int rowCnt = 0;
 
-        std::cout << "+-----------+-----------+-----------+\n";
+        std::cout << "+-------------------------------------+\n";
         for (auto const & row : board) {
+            int colCnt = 0;
             for (auto const & col : row) {
                 if (col == 0) {
                     std::cout << "|   ";
@@ -129,13 +130,22 @@ namespace Sudoku {
                 else {
                     std::cout << "| " << col << ' ';
                 }
+
+                if (++colCnt == 3 || colCnt == 6) {
+                    std::cout << '|';
+                }
             }
             std::cout << "|\n";
             if ((++rowCnt % board.blocks()) == 0) {
-                std::cout << "+-----------+-----------+-----------+\n";
+                if (rowCnt == 3 || rowCnt == 6) {
+                    std::cout << "|=====================================|\n";
+                }
+                else {
+                    std::cout << "+-------------------------------------+\n";
+                }
             }
             else {
-                std::cout << "|-----------------------------------|\n";
+                std::cout << "|-------------------------------------|\n";
             }
         }
         std::cout.flush();
