@@ -52,7 +52,11 @@ namespace Sudoku {
     void Generator::applyDifficulty()
     {
         std::size_t const removeCnt = numberToRemove();
-        for (std::size_t count = 0; count < removeCnt; ++count) {
+        std::size_t const removeCntMinus1 = removeCnt - 1;
+        std::size_t const removeRelCnt = numberRelatedToRemove();
+        std::size_t count = 0;
+
+        while (count++ < removeCnt) {
             std::size_t row = randomPosition();
             std::size_t col = randomPosition();
             while (board_[row][col] == 0) {
@@ -60,7 +64,18 @@ namespace Sudoku {
                 col = randomPosition();
             }
 
+            auto const letter = board_[row][col];
             board_[row][col] = 0;
+
+            for (std::size_t relCount = 0; relCount < removeRelCnt; ++relCount) {
+                if (count < removeCntMinus1) {
+                    auto [relRow, relCol] = findRelated(row, col, letter);
+                    if (board_[relRow][relCol] != 0) {
+                        board_[relRow][relCol] = 0;
+                        ++count;
+                    }
+                }
+            }
         }
     }
 
@@ -74,6 +89,30 @@ namespace Sudoku {
         }
 
         return 0;
+    }
+
+    std::size_t Generator::numberRelatedToRemove() const noexcept
+    {
+        switch (difficulty_) {
+        case Difficulty::Easy:   return 1;
+        case Difficulty::Medium: return 2;
+        case Difficulty::Hard:   return 2;
+        case Difficulty::Expert: return 3;
+        }
+
+        return 0;
+    }
+
+    std::pair<std::size_t, std::size_t> Generator::findRelated(std::size_t row, std::size_t col, int letter) const noexcept
+    {
+        for (std::size_t relRow = randomPosition(); relRow < board_.size(); ++relRow) {
+            for (std::size_t relCol = randomPosition(); relCol < board_.size(); ++relCol) {
+                if (board_[relRow][relCol] == letter) {
+                    return std::make_pair(relRow, relCol);
+                }
+            }
+        }
+        return std::make_pair(row, col);
     }
 
 }

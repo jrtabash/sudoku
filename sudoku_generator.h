@@ -22,6 +22,8 @@ namespace Sudoku {
         void applyDifficulty();
 
         std::size_t numberToRemove() const noexcept;
+        std::size_t numberRelatedToRemove() const noexcept;
+        std::pair<std::size_t, std::size_t> findRelated(std::size_t row, std::size_t col, int letter) const noexcept;
 
     private:
         static inline unsigned randomPosition();
