@@ -13,6 +13,9 @@ namespace Sudoku {
         static std::string const Operation_Generate;
         static std::string const Operation_Show;
 
+        static std::string const Mode_Recursive;
+        static std::string const Mode_Iterative;
+
         static std::string const Difficulty_Easy;
         static std::string const Difficulty_Medium;
         static std::string const Difficulty_Hard;
@@ -37,6 +40,10 @@ namespace Sudoku {
         inline bool isSolveOperation() const noexcept;
         inline bool isGenerateOperation() const noexcept;
         inline bool isShowOperation() const noexcept;
+
+        inline std::string const & mode() const noexcept;
+        inline bool isModeRecursive() const noexcept;
+        inline bool isModeIterative() const noexcept;
         
         inline Generator::Difficulty difficulty() const noexcept;
         inline std::string const & difficultyString() const noexcept;
@@ -49,6 +56,7 @@ namespace Sudoku {
         static Generator::Difficulty stringToDifficulty(std::string const & str);
         static std::string const & difficultyToString(Generator::Difficulty difficulty);
         static std::string difficultyListString();
+        static std::string modeListString();
 
     private:
         int argc_;
@@ -60,6 +68,7 @@ namespace Sudoku {
         std::string puzzleFilename_;
         std::string saveFilename_;
         std::string operation_;
+        std::string mode_;
         Generator::Difficulty difficulty_;
     };
 
@@ -114,6 +123,21 @@ namespace Sudoku {
     inline bool Arguments::isShowOperation() const noexcept
     {
         return operation_ == Operation_Show;
+    }
+
+    inline std::string const & Arguments::mode() const noexcept
+    {
+        return mode_;
+    }
+
+    inline bool Arguments::isModeRecursive() const noexcept
+    {
+        return mode_ == Mode_Recursive;
+    }
+
+    inline bool Arguments::isModeIterative() const noexcept
+    {
+        return mode_ == Mode_Iterative;
     }
 
     inline Generator::Difficulty Arguments::difficulty() const noexcept

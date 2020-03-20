@@ -29,5 +29,6 @@ Options
         -y       : Pretty print board
         -p <arg> : Read input puzzle / boad from given filename (required by solve and show)
         -s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)
+        -m <arg> : Solver mode; one of recursive, iterative (optional with solve, default=recursive)
         -d <arg> : Generator difficulty level; one of easy, medium, hard, expert (optional with generate, default=easy)
 ```

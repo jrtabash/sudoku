@@ -63,10 +63,10 @@ namespace Sudoku {
         Board board(pFile.load());
 
         if (args_.verbose()) {
-            std::cout << "Solving puzzle " << args_.puzzleFilename() << '\n' << std::endl;
+            std::cout << "Solving puzzle " << args_.mode() << ' ' << args_.puzzleFilename() << '\n' << std::endl;
         }
 
-        Solver(board).solve();
+        Solver(board).solve(args_.isModeRecursive() ? Solver::Type::Recursive : Solver::Type::Iterative);
         print(board);
         save(board);
     }

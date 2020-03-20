@@ -9,6 +9,9 @@ namespace Sudoku {
     std::string const Arguments::Operation_Generate = "generate";
     std::string const Arguments::Operation_Show     = "show";
 
+    std::string const Arguments::Mode_Recursive = "recursive";
+    std::string const Arguments::Mode_Iterative = "iterative";
+
     std::string const Arguments::Difficulty_Easy   = "easy";
     std::string const Arguments::Difficulty_Medium = "medium";
     std::string const Arguments::Difficulty_Hard   = "hard";
@@ -21,6 +24,7 @@ namespace Sudoku {
         , verbose_(false)
         , replace_(false)
         , pretty_(false)
+        , mode_(Mode_Recursive)
         , difficulty_(Generator::Difficulty::Easy)
     {
     }
@@ -39,6 +43,7 @@ namespace Sudoku {
                   << '\t' << "-y       : Pretty print board\n"
                   << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
+                  << '\t' << "-m <arg> : Solver mode; one of " << modeListString() << " (optional with solve, default=" << Mode_Recursive << ")\n"
                   << '\t' << "-d <arg> : Generator difficulty level; one of " << difficultyListString() << " (optional with generate, default=" << Difficulty_Easy << ")\n"
                   << std::endl;
     }
@@ -52,6 +57,7 @@ namespace Sudoku {
             else if (arg == "-y") { pretty_ = true; }
             else if (arg == "-p") { puzzleFilename_ = readArg("-p", i); }
             else if (arg == "-s") { saveFilename_ = readArg("-s", i); }
+            else if (arg == "-m") { mode_ = readArg("-m", i); }
             else if (arg == "-d") { difficulty_ = stringToDifficulty(readArg("-d", i)); }
             else if (operation_.empty()) {
                 if (arg != Operation_Solve && arg != Operation_Generate && arg != Operation_Show) {
@@ -101,6 +107,10 @@ namespace Sudoku {
                 throw std::runtime_error("Cannot use save puzzle file with show operation");
             }                
         }
+
+        if (!isModeRecursive() && !isModeIterative()) {
+            throw std::runtime_error("Invalid mode");
+        }
     }
 
     Generator::Difficulty Arguments::stringToDifficulty(std::string const & str)
@@ -131,6 +141,11 @@ namespace Sudoku {
     std::string Arguments::difficultyListString()
     {
         return Difficulty_Easy + ", " + Difficulty_Medium + ", " + Difficulty_Hard + ", " + Difficulty_Expert;
+    }
+
+    std::string Arguments::modeListString()
+    {
+        return Mode_Recursive + ", " + Mode_Iterative;
     }
 
 }

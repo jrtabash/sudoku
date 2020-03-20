@@ -19,6 +19,11 @@ namespace Sudoku {
         static constexpr std::size_t size() { return 9; }
         static constexpr std::size_t blocks() { return 3; }
         static constexpr std::array<int, 9> letters() { return {1, 2, 3, 4, 5, 6, 7, 8, 9 }; }
+        static constexpr int emptyLetter() { return 0; }
+        static constexpr int firstLetter() { return 1; }
+        static constexpr int lastLetter() { return 9; }
+        static constexpr int beginLetter() { return 1; }
+        static constexpr int endLetter() { return 10; }
 
         inline Row const & operator[](int idx) const;
         inline Row & operator[](int idx);
