@@ -4,7 +4,7 @@ Sudoku command line utility with support for solving and generating sudoku puzzl
 ## Examples
 ### Solve
 ```bash
-sudoku solve -p puzzles/example1.pzl
+sudoku solve -m iterative -p puzzles/example1.pzl
 ```
 
 ### Generate
