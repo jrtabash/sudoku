@@ -30,7 +30,7 @@ namespace Sudoku {
         for (std::size_t row = 0; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
                 if (board_[row][col] == 0) {
-                    std::array<int, 9> letters = {1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                    auto letters = board_.letters();
                     std::shuffle(letters.begin(), letters.end(), std::mt19937(std::random_device()()));
 
                     for (auto const letter : letters) {
