@@ -25,13 +25,13 @@ $(TARGET): $(OBJS)
 sudoku.o: sudoku.cpp sudoku_board.h sudoku_solver.h
 	$(CPP) $(CFLAGS) -c sudoku.cpp -o sudoku.o
 
-sudoku_board.o: sudoku_board.cpp sudoku_board.h
+sudoku_board.o: sudoku_board.cpp sudoku_board.h sudoku_alphabet.h
 	$(CPP) $(CFLAGS) -c sudoku_board.cpp -o sudoku_board.o
 
-sudoku_solver.o: sudoku_solver.cpp sudoku_solver.h sudoku_board.h
+sudoku_solver.o: sudoku_solver.cpp sudoku_solver.h sudoku_board.h sudoku_alphabet.h
 	$(CPP) $(CFLAGS) -c sudoku_solver.cpp -o sudoku_solver.o
 
-sudoku_generator.o: sudoku_generator.cpp sudoku_generator.h sudoku_board.h
+sudoku_generator.o: sudoku_generator.cpp sudoku_generator.h sudoku_board.h sudoku_alphabet.h
 	$(CPP) $(CFLAGS) -c sudoku_generator.cpp -o sudoku_generator.o
 
 sudoku_file.o: sudoku_file.cpp sudoku_file.h sudoku_board.h

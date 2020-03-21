@@ -1,6 +1,7 @@
 #ifndef SUDOKU_SOLVER_H
 #define SUDOKU_SOLVER_H
 
+#include "sudoku_alphabet.h"
 #include "sudoku_board.h"
 
 #include <stack>
@@ -22,9 +23,9 @@ namespace Sudoku {
         struct StackEntry {
             std::size_t row;
             std::size_t col;
-            int letter;
+            Letter letter;
 
-            StackEntry(std::size_t row, std::size_t col, int letter);
+            StackEntry(std::size_t row, std::size_t col, Letter letter);
         };
 
         using Stack = std::stack<StackEntry>;

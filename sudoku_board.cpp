@@ -9,10 +9,10 @@ namespace Sudoku {
     {
     }
 
-    bool Board::isAllowed(std::size_t row, std::size_t col, int letter) const
+    bool Board::isAllowed(std::size_t row, std::size_t col, Letter letter) const
     {
         // Cell already occupied check
-        if (grid_[row][col] != 0) {
+        if (grid_[row][col] != Alphabet::space()) {
             return false;
         }
 

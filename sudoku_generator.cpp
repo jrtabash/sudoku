@@ -20,7 +20,7 @@ namespace Sudoku {
     {
         for (std::size_t row = 0; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
-                board_[row][col] = 0;
+                board_[row][col] = Alphabet::space();
             }
         }
     }
@@ -29,8 +29,8 @@ namespace Sudoku {
     {
         for (std::size_t row = 0; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
-                if (board_[row][col] == 0) {
-                    auto letters = board_.letters();
+                if (board_[row][col] == Alphabet::space()) {
+                    auto letters = Alphabet::all();
                     std::shuffle(letters.begin(), letters.end(), std::mt19937(std::random_device()()));
 
                     for (auto const letter : letters) {
@@ -39,7 +39,7 @@ namespace Sudoku {
                             if (generateBoard()) {
                                 return true;
                             }
-                            board_[row][col] = 0;
+                            board_[row][col] = Alphabet::space();
                         }
                     }
                     return false;
@@ -59,19 +59,19 @@ namespace Sudoku {
         while (count++ < removeCnt) {
             std::size_t row = randomPosition();
             std::size_t col = randomPosition();
-            while (board_[row][col] == 0) {
+            while (board_[row][col] == Alphabet::space()) {
                 row = randomPosition();
                 col = randomPosition();
             }
 
             auto const letter = board_[row][col];
-            board_[row][col] = 0;
+            board_[row][col] = Alphabet::space();
 
             for (std::size_t relCount = 0; relCount < removeRelCnt; ++relCount) {
                 if (count < removeCntMinus1) {
                     auto [relRow, relCol] = findRelated(row, col, letter);
-                    if (board_[relRow][relCol] != 0) {
-                        board_[relRow][relCol] = 0;
+                    if (board_[relRow][relCol] != Alphabet::space()) {
+                        board_[relRow][relCol] = Alphabet::space();
                         ++count;
                     }
                 }
@@ -103,7 +103,7 @@ namespace Sudoku {
         return 0;
     }
 
-    std::pair<std::size_t, std::size_t> Generator::findRelated(std::size_t row, std::size_t col, int letter) const noexcept
+    std::pair<std::size_t, std::size_t> Generator::findRelated(std::size_t row, std::size_t col, Letter letter) const noexcept
     {
         for (std::size_t relRow = randomPosition(); relRow < board_.size(); ++relRow) {
             for (std::size_t relCol = randomPosition(); relCol < board_.size(); ++relCol) {

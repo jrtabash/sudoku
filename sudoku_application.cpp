@@ -124,7 +124,7 @@ namespace Sudoku {
         for (auto const & row : board) {
             int colCnt = 0;
             for (auto const & col : row) {
-                if (col == 0) {
+                if (col == Alphabet::space()) {
                     std::cout << "|   ";
                 }
                 else {

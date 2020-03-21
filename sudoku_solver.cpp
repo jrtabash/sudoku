@@ -1,5 +1,6 @@
 #include "sudoku_solver.h"
 
+#include <algorithm>
 #include <optional>
 
 namespace Sudoku {
@@ -23,14 +24,14 @@ namespace Sudoku {
     {
         for (std::size_t row = 0; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
-                if (board_[row][col] == 0) {
-                    for (auto const letter : board_.letters()) {
+                if (board_[row][col] == Alphabet::space()) {
+                    for (auto const letter : Alphabet::all()) {
                         if (board_.isAllowed(row, col, letter)) {
                             board_[row][col] = letter;
                             if (solveRecursive()) {
                                 return true;
                             }
-                            board_[row][col] = 0;
+                            board_[row][col] = Alphabet::space();
                         }
                     }
                     return false;
@@ -44,23 +45,25 @@ namespace Sudoku {
     {
         Stack stack;
 
-        auto trySetAt = [this, &stack](std::size_t row, std::size_t col, std::optional<int> optLetter = std::nullopt) -> bool {
-            auto letter = optLetter ? *optLetter : board_.beginLetter();
-            for (; letter != board_.endLetter(); ++letter) {
+        auto trySetAt = [this, &stack](std::size_t row, std::size_t col, std::optional<Letter> optLetter = std::nullopt) -> bool {
+            auto const letters = Alphabet::all();
+            auto iter = optLetter ? std::lower_bound(letters.begin(), letters.end(), *optLetter) : letters.begin();
+            for (; iter != letters.end(); ++iter) {
+                auto const letter = *iter;
                 if (board_.isAllowed(row, col, letter)) {
                     stack.emplace(row, col, letter);
                     board_[row][col] = letter;
                     break;
                 }
             }
-            return letter != board_.endLetter();
+            return iter != letters.end();
         };
 
         auto backtrack = [this, trySetAt, &stack](std::size_t & row, std::size_t & col) -> bool {
             while (true) {
-                while (!stack.empty() && stack.top().letter == board_.lastLetter()) {
+                while (!stack.empty() && stack.top().letter == Alphabet::last()) {
                     auto const & top = stack.top();
-                    board_[top.row][top.col] = board_.emptyLetter();
+                    board_[top.row][top.col] = Alphabet::space();
                     stack.pop();
                 }
 
@@ -69,7 +72,7 @@ namespace Sudoku {
                 }
 
                 auto top = stack.top();
-                board_[top.row][top.col] = board_.emptyLetter();
+                board_[top.row][top.col] = Alphabet::space();
                 stack.pop();
 
                 if (!trySetAt(top.row, top.col, ++top.letter)) {
@@ -84,7 +87,7 @@ namespace Sudoku {
 
         for (std::size_t row = 0; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
-                if (board_[row][col] == board_.emptyLetter()) {
+                if (board_[row][col] == Alphabet::space()) {
                     if (!trySetAt(row, col)) {
                         if (!backtrack(row, col)) {
                             return false;
@@ -96,7 +99,7 @@ namespace Sudoku {
         return true;
     }
 
-    Solver::StackEntry::StackEntry(std::size_t row, std::size_t col, int letter)
+    Solver::StackEntry::StackEntry(std::size_t row, std::size_t col, Letter letter)
         : row(row)
         , col(col)
         , letter(letter)
