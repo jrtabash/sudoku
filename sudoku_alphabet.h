@@ -14,7 +14,17 @@ namespace Sudoku {
         static constexpr Letter space() { return 0; }
         static constexpr Letter first() { return 1; }
         static constexpr Letter last()  { return 9; }
+
+        static inline Letter next(Letter letter) noexcept;
     };
+
+    // --------------------------------------------------------------------------------
+    // INLINE
+
+    inline Letter Alphabet::next(Letter letter) noexcept
+    {
+        return letter == Alphabet::last() ? Alphabet::space() : letter + 1;
+    }
 
 }
 

@@ -75,7 +75,7 @@ namespace Sudoku {
                 board_[top.row][top.col] = Alphabet::space();
                 stack.pop();
 
-                if (!trySetAt(top.row, top.col, ++top.letter)) {
+                if (!trySetAt(top.row, top.col, Alphabet::next(top.letter))) {
                     continue;
                 }
 
