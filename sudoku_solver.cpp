@@ -45,18 +45,16 @@ namespace Sudoku {
     {
         Stack stack;
 
-        auto trySetAt = [this, &stack](std::size_t row, std::size_t col, std::optional<Letter> optLetter = std::nullopt) -> bool {
-            auto const letters = Alphabet::all();
-            auto iter = optLetter ? std::lower_bound(letters.begin(), letters.end(), *optLetter) : letters.begin();
-            for (; iter != letters.end(); ++iter) {
-                auto const letter = *iter;
+        auto trySetAt = [this, &stack](std::size_t row, std::size_t col, Letter startLetter = Alphabet::first()) -> bool {
+            auto letter = startLetter;
+            for (; letter != Alphabet::end(); letter = Alphabet::next(letter)) {
                 if (board_.isAllowed(row, col, letter)) {
                     stack.emplace(row, col, letter);
                     board_[row][col] = letter;
                     break;
                 }
             }
-            return iter != letters.end();
+            return letter != Alphabet::end();
         };
 
         auto backtrack = [this, trySetAt, &stack](std::size_t & row, std::size_t & col) -> bool {
