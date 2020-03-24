@@ -16,7 +16,7 @@ namespace Sudoku {
         Solver(Board & board);
 
         bool solve(Type type);
-        bool solveRecursive();
+        bool solveRecursive(std::size_t startRow = 0);
         bool solveIterative();
 
     private:

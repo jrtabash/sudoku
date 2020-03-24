@@ -20,15 +20,15 @@ namespace Sudoku {
         }
     }
 
-    bool Solver::solveRecursive()
+    bool Solver::solveRecursive(std::size_t startRow)
     {
-        for (std::size_t row = 0; row < board_.size(); ++row) {
+        for (std::size_t row = startRow; row < board_.size(); ++row) {
             for (std::size_t col = 0; col < board_.size(); ++col) {
                 if (board_[row][col] == Alphabet::space()) {
                     for (auto const letter : Alphabet::all()) {
                         if (board_.isAllowed(row, col, letter)) {
                             board_[row][col] = letter;
-                            if (solveRecursive()) {
+                            if (solveRecursive(row)) {
                                 return true;
                             }
                             board_[row][col] = Alphabet::space();

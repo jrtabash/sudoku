@@ -19,7 +19,7 @@ namespace Sudoku {
 
     private:
         void clearBoard();
-        bool generateBoard();
+        bool generateBoard(std::size_t startRow = 0);
         void applyDifficulty();
 
         std::size_t numberToRemove() const noexcept;
