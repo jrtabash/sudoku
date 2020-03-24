@@ -28,6 +28,7 @@ namespace Sudoku {
         inline Grid::const_iterator end() const noexcept;
 
         bool isAllowed(std::size_t row, std::size_t col, Letter letter) const;
+        bool isCorrect(std::size_t row, std::size_t col) const;
 
         void read(std::istream & in);
         void write(std::ostream & out) const;

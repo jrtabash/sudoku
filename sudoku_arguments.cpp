@@ -8,6 +8,7 @@ namespace Sudoku {
     std::string const Arguments::Operation_Solve    = "solve";
     std::string const Arguments::Operation_Generate = "generate";
     std::string const Arguments::Operation_Show     = "show";
+    std::string const Arguments::Operation_Check    = "check";
 
     std::string const Arguments::Mode_Recursive = "recursive";
     std::string const Arguments::Mode_Iterative = "iterative";
@@ -24,6 +25,7 @@ namespace Sudoku {
         , verbose_(false)
         , replace_(false)
         , pretty_(false)
+        , allowSpace_(false)
         , mode_(Mode_Recursive)
         , difficulty_(Generator::Difficulty::Easy)
     {
@@ -36,11 +38,13 @@ namespace Sudoku {
                   << '\t' << " " << Operation_Solve << "    : Solve puzzle\n"
                   << '\t' << " " << Operation_Generate << " : Generate puzzle\n"
                   << '\t' << " " << Operation_Show << "     : Show puzzle\n"
+                  << '\t' << " " << Operation_Check << "    : Check puzzle\n"
                   << "\nOptions\n"
                   << '\t' << "-h       : Print usage\n"
                   << '\t' << "-v       : Verbose mode\n"
                   << '\t' << "-f       : Force saving if file already exists\n"
                   << '\t' << "-y       : Pretty print board\n"
+                  << '\t' << "-w       : Allow Space when checking a puzzle\n"
                   << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
                   << '\t' << "-m <arg> : Solver mode; one of " << modeListString() << " (optional with solve, default=" << Mode_Recursive << ")\n"
@@ -55,12 +59,13 @@ namespace Sudoku {
             else if (arg == "-v") { verbose_ = true; }
             else if (arg == "-f") { replace_ = true; }
             else if (arg == "-y") { pretty_ = true; }
+            else if (arg == "-w") { allowSpace_ = true; }
             else if (arg == "-p") { puzzleFilename_ = readArg("-p", i); }
             else if (arg == "-s") { saveFilename_ = readArg("-s", i); }
             else if (arg == "-m") { mode_ = readArg("-m", i); }
             else if (arg == "-d") { difficulty_ = stringToDifficulty(readArg("-d", i)); }
             else if (operation_.empty()) {
-                if (arg != Operation_Solve && arg != Operation_Generate && arg != Operation_Show) {
+                if (arg != Operation_Solve && arg != Operation_Generate && arg != Operation_Show && arg != Operation_Check) {
                     throw std::runtime_error(std::string("Unsupported operation - ") + arg);
                 }
                 operation_ = arg;

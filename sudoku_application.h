@@ -18,6 +18,7 @@ namespace Sudoku {
         void solve();
         void generate();
         void show();
+        bool check();
 
         void save(Board const & board);
         void print(Board const & board);

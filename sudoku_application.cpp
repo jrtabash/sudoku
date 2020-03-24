@@ -2,6 +2,7 @@
 #include "sudoku_board.h"
 #include "sudoku_solver.h"
 #include "sudoku_generator.h"
+#include "sudoku_checker.h"
 #include "sudoku_file.h"
 
 #include <iostream>
@@ -48,6 +49,9 @@ namespace Sudoku {
             else if (args_.isShowOperation()) {
                 show();
             }
+            else if (args_.isCheckOperation()) {
+                return check();
+            }
         }
         catch (std::exception const & ex) {
             std::cerr << "Error: " << ex.what() << std::endl;
@@ -93,6 +97,21 @@ namespace Sudoku {
         }
 
         print(board);
+    }
+
+    bool Application::check()
+    {
+        File pFile(args_.puzzleFilename());
+        Board board(pFile.load());
+
+        if (args_.verbose()) {
+            std::cout << "Checking puzzle (" << (args_.allowSpace() ? "Allow" : "Do not allow") << " space) " << args_.puzzleFilename() << '\n' << std::endl;
+        }
+
+        Checker checker(board);
+        bool const valid = checker.check(args_.allowSpace());
+        std::cout << "Puzzle is " << (valid ? "correct" : "incorrect") << std::endl;
+        return valid;
     }
 
     void Application::save(Board const & board)

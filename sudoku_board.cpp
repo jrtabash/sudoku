@@ -45,6 +45,46 @@ namespace Sudoku {
         return true;
     }
 
+    bool Board::isCorrect(std::size_t row, std::size_t col) const
+    {
+        Letter const letter = grid_[row][col];
+
+        // Cell empty check
+        if (letter == Alphabet::space()) {
+            return false;
+        }
+
+        // Column Check
+        for (std::size_t i = 0; i < grid_.size(); ++i) {
+            if (i != row && grid_[i][col] == letter) {
+                return false;
+            }
+        }
+
+        // Row Check
+        for (std::size_t j = 0; j < grid_.size(); ++j) {
+            if (j != col && grid_[row][j] == letter) {
+                return false;
+            }
+        }
+
+        // Block Check
+        auto const blocks = Board::blocks();
+        auto const baseRow = row - (row % blocks);
+        auto const baseCol = col - (col % blocks);
+        for (std::size_t i = 0; i < blocks; ++i) {
+            for (std::size_t j = 0; j < blocks; ++j) {
+                auto const cRow = baseRow + i;
+                auto const cCol = baseCol + j;
+                if (cRow != row && cCol != col && grid_[cRow][cCol] == letter) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     void Board::read(std::istream & in)
     {
         Grid grid;
