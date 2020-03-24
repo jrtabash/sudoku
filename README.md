@@ -1,5 +1,5 @@
 # sudoku
-Sudoku command line utility with support for solving and generating sudoku puzzles.
+Sudoku command line utility with support for solving, generating and checking sudoku puzzles.
 
 ## Examples
 ### Solve
@@ -13,6 +13,7 @@ sudoku generate -d medium
 ```
 
 ### Check
+Check exit status is 0 if puzzle is correct, 1 otherwise.
 ```bash
 sudoku check -p solved.pzl
 sudoku check -w -p unsolved.pzl
