@@ -104,7 +104,7 @@ namespace Sudoku {
         grid_ = std::move(grid);
     }
 
-    void Board::write(std::ostream & out) const
+    void Board::write(std::ostream & out, bool separateBlocks) const
     {
         int rowCnt = 0;
         int colCnt = 0;
@@ -112,12 +112,12 @@ namespace Sudoku {
         for (auto const & row : grid_) {
             for (auto const & cell : row) {
                 out << cell << ' ';
-                if ((++colCnt % blocks()) == 0) {
+                if (separateBlocks && (++colCnt % blocks()) == 0) {
                     out << ' ';
                 }
             }
             out << '\n';
-            if ((++rowCnt % blocks()) == 0) {
+            if (separateBlocks && (++rowCnt % blocks()) == 0) {
                 out << '\n';
             }
         }

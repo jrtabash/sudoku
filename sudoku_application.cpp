@@ -131,7 +131,7 @@ namespace Sudoku {
             prettyPrint(board);
         }
         else {
-            board.write(std::cout);
+            board.write(std::cout, true /*separateBlocks*/);
         }
     }
 

@@ -31,7 +31,7 @@ namespace Sudoku {
         bool isCorrect(std::size_t row, std::size_t col) const;
 
         void read(std::istream & in);
-        void write(std::ostream & out) const;
+        void write(std::ostream & out, bool separateBlocks = false) const;
 
     private:
         Grid grid_ = {};
