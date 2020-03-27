@@ -5,6 +5,18 @@ if [ "$1" != "" ]; then
     binary=$1
 fi
 
+currdir=$(pwd)
+testdir=.
+if [ "$(basename ${currdir})" != "test" ]; then
+    if [ "$(basename $(dirname ${currdir}))" == "sudoku" ]; then
+        # We are in a sub folder one level under the top level folder 'sudoku'
+        testdir=../test
+    else
+        # We are at the top level folder 'sudoku'
+        testdir=test
+    fi
+fi
+
 status=0
 
 function test_solve() {
@@ -12,10 +24,10 @@ function test_solve() {
 
     solution=/tmp/solution.pzl
 
-    for puzzle in $(ls test_puzzles/)
+    for puzzle in $(ls ${testdir}/test_puzzles/)
     do
         echo "Test solve: ${mode} ${puzzle}"
-        ${binary} solve -m ${mode} -p test_puzzles/${puzzle} -f -s ${solution} > /dev/null
+        ${binary} solve -m ${mode} -p ${testdir}/test_puzzles/${puzzle} -f -s ${solution} > /dev/null
 
         ${binary} check -p ${solution} > /dev/null
         if [ $? -ne 0 ]; then
@@ -23,7 +35,7 @@ function test_solve() {
             status=1
         fi
 
-        cmp ${solution} test_solutions/${puzzle} > /dev/null 2>&1
+        cmp ${solution} ${testdir}/test_solutions/${puzzle} > /dev/null 2>&1
         if [ $? -ne 0 ]; then
             echo "Solve comparison failed"
             status=1
