@@ -4,6 +4,7 @@
 #include "sudoku_generator.h"
 #include "sudoku_checker.h"
 #include "sudoku_file.h"
+#include "sudoku_pretty_print.h"
 
 #include <iostream>
 
@@ -128,46 +129,11 @@ namespace Sudoku {
     void Application::print(Board const & board) const
     {
         if (args_.pretty()) {
-            prettyPrint(board);
+            prettyPrint(board, PrintInfo(args_.indexes(), args_.indexes()));
         }
         else {
             board.write(std::cout, true /*separateBlocks*/);
         }
-    }
-
-    void Application::prettyPrint(Board const & board)
-    {
-        int rowCnt = 0;
-
-        std::cout << "+-------------------------------------+\n";
-        for (auto const & row : board) {
-            int colCnt = 0;
-            for (auto const & col : row) {
-                if (col == Alphabet::space()) {
-                    std::cout << "|   ";
-                }
-                else {
-                    std::cout << "| " << col << ' ';
-                }
-
-                if (++colCnt == 3 || colCnt == 6) {
-                    std::cout << '|';
-                }
-            }
-            std::cout << "|\n";
-            if ((++rowCnt % board.blocks()) == 0) {
-                if (rowCnt == 3 || rowCnt == 6) {
-                    std::cout << "|===========  ===========  ===========|\n";
-                }
-                else {
-                    std::cout << "+-------------------------------------+\n";
-                }
-            }
-            else {
-                std::cout << "|-----------||-----------||-----------|\n";
-            }
-        }
-        std::cout.flush();
     }
 
 }

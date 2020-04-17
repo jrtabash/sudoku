@@ -35,6 +35,7 @@ Options
         -v       : Verbose mode
         -f       : Force saving if file already exists
         -y       : Pretty print board
+        -i       : Show row and column indexes with pretty print option
         -w       : Allow Space when checking a puzzle
         -p <arg> : Read input puzzle / boad from given filename (required by solve and show)
         -s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)

@@ -25,6 +25,7 @@ namespace Sudoku {
         , verbose_(false)
         , replace_(false)
         , pretty_(false)
+        , indexes_(false)
         , allowSpace_(false)
         , mode_(Mode_Recursive)
         , difficulty_(Generator::Difficulty::Easy)
@@ -44,6 +45,7 @@ namespace Sudoku {
                   << '\t' << "-v       : Verbose mode\n"
                   << '\t' << "-f       : Force saving if file already exists\n"
                   << '\t' << "-y       : Pretty print board\n"
+                  << '\t' << "-i       : Show row and column indexes with pretty print option\n"
                   << '\t' << "-w       : Allow Space when checking a puzzle\n"
                   << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
@@ -59,6 +61,7 @@ namespace Sudoku {
             else if (arg == "-v") { verbose_ = true; }
             else if (arg == "-f") { replace_ = true; }
             else if (arg == "-y") { pretty_ = true; }
+            else if (arg == "-i") { indexes_ = true; }
             else if (arg == "-w") { allowSpace_ = true; }
             else if (arg == "-p") { puzzleFilename_ = readArg("-p", i); }
             else if (arg == "-s") { saveFilename_ = readArg("-s", i); }

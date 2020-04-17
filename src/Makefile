@@ -10,6 +10,7 @@ OBJS=\
 	sudoku_generator.o \
 	sudoku_checker.o \
 	sudoku_file.o \
+	sudoku_pretty_print.o \
 	sudoku_arguments.o \
 	sudoku_application.o \
 	sudoku.o
@@ -40,6 +41,9 @@ sudoku_checker.o: sudoku_checker.cpp sudoku_checker.h sudoku_board.h sudoku_alph
 
 sudoku_file.o: sudoku_file.cpp sudoku_file.h sudoku_board.h
 	$(CPP) $(CFLAGS) -c sudoku_file.cpp -o sudoku_file.o
+
+sudoku_pretty_print.o: sudoku_pretty_print.cpp sudoku_pretty_print.h sudoku_board.h sudoku_alphabet.h
+	$(CPP) $(CFLAGS) -c sudoku_pretty_print.cpp -o sudoku_pretty_print.o
 
 sudoku_arguments.o: sudoku_arguments.cpp sudoku_arguments.h
 	$(CPP) $(CFLAGS) -c sudoku_arguments.cpp -o sudoku_arguments.o
