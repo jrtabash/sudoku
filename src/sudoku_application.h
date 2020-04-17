@@ -19,6 +19,7 @@ namespace Sudoku {
         void generate() const;
         void show() const;
         bool check() const;
+        void play() const;
 
         void save(Board const & board) const;
         void print(Board const & board) const;

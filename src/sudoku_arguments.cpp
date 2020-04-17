@@ -9,6 +9,7 @@ namespace Sudoku {
     std::string const Arguments::Operation_Generate = "generate";
     std::string const Arguments::Operation_Show     = "show";
     std::string const Arguments::Operation_Check    = "check";
+    std::string const Arguments::Operation_Play     = "play";
 
     std::string const Arguments::Mode_Recursive = "recursive";
     std::string const Arguments::Mode_Iterative = "iterative";
@@ -27,6 +28,7 @@ namespace Sudoku {
         , pretty_(false)
         , indexes_(false)
         , allowSpace_(false)
+        , allowBadMoves_(false)
         , mode_(Mode_Recursive)
         , difficulty_(Generator::Difficulty::Easy)
     {
@@ -38,8 +40,9 @@ namespace Sudoku {
                   << "\nOperations\n"
                   << '\t' << " " << Operation_Solve << "    : Solve puzzle\n"
                   << '\t' << " " << Operation_Generate << " : Generate puzzle\n"
-                  << '\t' << " " << Operation_Show << "     : Show puzzle\n"
                   << '\t' << " " << Operation_Check << "    : Check puzzle\n"
+                  << '\t' << " " << Operation_Play << "     : Play puzzle\n"
+                  << '\t' << " " << Operation_Show << "     : Show puzzle\n"
                   << "\nOptions\n"
                   << '\t' << "-h       : Print usage\n"
                   << '\t' << "-v       : Verbose mode\n"
@@ -47,6 +50,7 @@ namespace Sudoku {
                   << '\t' << "-y       : Pretty print board\n"
                   << '\t' << "-i       : Show row and column indexes with pretty print option\n"
                   << '\t' << "-w       : Allow Space when checking a puzzle\n"
+                  << '\t' << "-b       : Allow bad / invalid moves when playing a puzzle\n"
                   << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
                   << '\t' << "-m <arg> : Solver mode; one of " << modeListString() << " (optional with solve, default=" << Mode_Recursive << ")\n"
@@ -63,12 +67,17 @@ namespace Sudoku {
             else if (arg == "-y") { pretty_ = true; }
             else if (arg == "-i") { indexes_ = true; }
             else if (arg == "-w") { allowSpace_ = true; }
+            else if (arg == "-b") { allowBadMoves_ = true; }
             else if (arg == "-p") { puzzleFilename_ = readArg("-p", i); }
             else if (arg == "-s") { saveFilename_ = readArg("-s", i); }
             else if (arg == "-m") { mode_ = readArg("-m", i); }
             else if (arg == "-d") { difficulty_ = stringToDifficulty(readArg("-d", i)); }
             else if (operation_.empty()) {
-                if (arg != Operation_Solve && arg != Operation_Generate && arg != Operation_Show && arg != Operation_Check) {
+                if (arg != Operation_Solve &&
+                    arg != Operation_Generate &&
+                    arg != Operation_Show &&
+                    arg != Operation_Check &&
+                    arg != Operation_Play) {
                     throw std::runtime_error(std::string("Unsupported operation - ") + arg);
                 }
                 operation_ = arg;
@@ -102,6 +111,10 @@ namespace Sudoku {
             throw std::runtime_error("Solve operation requires input puzzle file");
         }
 
+        if (isPlayOperation() && puzzleFilename_.empty()) {
+            throw std::runtime_error("Play operation requires input puzzle file");
+        }            
+
         if (isGenerateOperation() && !puzzleFilename_.empty()) {
             throw std::runtime_error("Cannot use input puzzle file with generate operation");
         }
@@ -113,7 +126,7 @@ namespace Sudoku {
 
             if (!saveFilename_.empty()) {
                 throw std::runtime_error("Cannot use save puzzle file with show operation");
-            }                
+            }
         }
 
         if (!isModeRecursive() && !isModeIterative()) {

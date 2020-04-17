@@ -27,8 +27,9 @@ Usage
 Operations
          solve    : Solve puzzle
          generate : Generate puzzle
-         show     : Show puzzle
          check    : Check puzzle
+         play     : Play puzzle
+         show     : Show puzzle
 
 Options
         -h       : Print usage
@@ -37,6 +38,7 @@ Options
         -y       : Pretty print board
         -i       : Show row and column indexes with pretty print option
         -w       : Allow Space when checking a puzzle
+        -b       : Allow bad / invalid moves when playing a puzzle
         -p <arg> : Read input puzzle / boad from given filename (required by solve and show)
         -s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)
         -m <arg> : Solver mode; one of recursive, iterative (optional with solve, default=recursive)

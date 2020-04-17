@@ -13,6 +13,7 @@ namespace Sudoku {
         static std::string const Operation_Generate;
         static std::string const Operation_Show;
         static std::string const Operation_Check;
+        static std::string const Operation_Play;
 
         static std::string const Mode_Recursive;
         static std::string const Mode_Iterative;
@@ -35,6 +36,7 @@ namespace Sudoku {
         inline bool pretty() const noexcept;
         inline bool indexes() const noexcept;
         inline bool allowSpace() const noexcept;
+        inline bool allowBadMoves() const noexcept;
         
         inline std::string const & puzzleFilename() const noexcept;
         inline std::string const & saveFilename() const noexcept;
@@ -44,6 +46,7 @@ namespace Sudoku {
         inline bool isGenerateOperation() const noexcept;
         inline bool isShowOperation() const noexcept;
         inline bool isCheckOperation() const noexcept;
+        inline bool isPlayOperation() const noexcept;
 
         inline std::string const & mode() const noexcept;
         inline bool isModeRecursive() const noexcept;
@@ -71,6 +74,7 @@ namespace Sudoku {
         bool pretty_;
         bool indexes_;
         bool allowSpace_;
+        bool allowBadMoves_;
         std::string puzzleFilename_;
         std::string saveFilename_;
         std::string operation_;
@@ -111,6 +115,11 @@ namespace Sudoku {
         return allowSpace_;
     }
 
+    inline bool Arguments::allowBadMoves() const noexcept
+    {
+        return allowBadMoves_;
+    }
+
     inline std::string const & Arguments::puzzleFilename() const noexcept
     {
         return puzzleFilename_;
@@ -144,6 +153,11 @@ namespace Sudoku {
     inline bool Arguments::isCheckOperation() const noexcept
     {
         return operation_ == Operation_Check;
+    }
+
+    inline bool Arguments::isPlayOperation() const noexcept
+    {
+        return operation_ == Operation_Play;
     }
 
     inline std::string const & Arguments::mode() const noexcept

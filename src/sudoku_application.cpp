@@ -4,6 +4,7 @@
 #include "sudoku_generator.h"
 #include "sudoku_checker.h"
 #include "sudoku_file.h"
+#include "sudoku_player.h"
 #include "sudoku_pretty_print.h"
 
 #include <iostream>
@@ -49,6 +50,9 @@ namespace Sudoku {
             }
             else if (args_.isShowOperation()) {
                 show();
+            }
+            else if (args_.isPlayOperation()) {
+                play();
             }
             else if (args_.isCheckOperation()) {
                 return check();
@@ -106,13 +110,37 @@ namespace Sudoku {
         Board board(pFile.load());
 
         if (args_.verbose()) {
-            std::cout << "Checking puzzle (" << (args_.allowSpace() ? "Allow" : "Do not allow") << " space) " << args_.puzzleFilename() << '\n' << std::endl;
+            std::cout << "Checking puzzle (" << (args_.allowSpace() ? "allow" : "do not allow") << " space) " << args_.puzzleFilename() << '\n' << std::endl;
         }
 
         Checker checker(board);
         bool const valid = checker.check(args_.allowSpace());
         std::cout << "Puzzle is " << (valid ? "correct" : "incorrect") << std::endl;
         return valid;
+    }
+
+    void Application::play() const
+    {
+        File pFile(args_.puzzleFilename());
+        Board board(pFile.load());
+
+        if (args_.verbose()) {
+            std::cout << "Playing puzzle (" << (args_.allowBadMoves() ? "allow" : "do not allow") << " bad moves) " << args_.puzzleFilename() << '\n' << std::endl;
+        }
+
+        Player player(board, args_.allowBadMoves());
+        if (player.play()) {
+            std::cout << "\nCongrats! Successfully solved the puzzle" << std::endl;
+        }
+        else {
+            if (player.earlyTermination()) {
+                std::cout << "\nExisted puzzle, please try again" << std::endl;
+            }
+            else {
+                std::cout << "\nFailed to solve puzzle, please try again" << std::endl;
+            }
+        }
+        save(board);
     }
 
     void Application::save(Board const & board) const
