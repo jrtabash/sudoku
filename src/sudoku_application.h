@@ -13,16 +13,18 @@ namespace Sudoku {
 
     private:
         bool parse();
-        bool process();
+        bool process() const;
 
-        void solve();
-        void generate();
-        void show();
-        bool check();
+        void solve() const;
+        void generate() const;
+        void show() const;
+        bool check() const;
 
-        void save(Board const & board);
-        void print(Board const & board);
-        void prettyPrint(Board const & board);
+        void save(Board const & board) const;
+        void print(Board const & board) const;
+
+    private:
+        static void prettyPrint(Board const & board);
 
     private:
         Arguments args_;

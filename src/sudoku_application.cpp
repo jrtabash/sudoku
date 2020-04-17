@@ -37,7 +37,7 @@ namespace Sudoku {
         return true;
     }
 
-    bool Application::process()
+    bool Application::process() const
     {
         try {
             if (args_.isSolveOperation()) {
@@ -61,7 +61,7 @@ namespace Sudoku {
         return true;
     }
 
-    void Application::solve()
+    void Application::solve() const
     {
         File pFile(args_.puzzleFilename());
         Board board(pFile.load());
@@ -75,7 +75,7 @@ namespace Sudoku {
         save(board);
     }
 
-    void Application::generate()
+    void Application::generate() const
     {
         if (args_.verbose()) {
             std::cout << "Generating puzzle difficulty " << args_.difficultyString() << '\n' << std::endl;
@@ -87,7 +87,7 @@ namespace Sudoku {
         save(board);
     }
 
-    void Application::show()
+    void Application::show() const
     {
         File pFile(args_.puzzleFilename());
         Board board(pFile.load());
@@ -99,7 +99,7 @@ namespace Sudoku {
         print(board);
     }
 
-    bool Application::check()
+    bool Application::check() const
     {
         File pFile(args_.puzzleFilename());
         Board board(pFile.load());
@@ -114,7 +114,7 @@ namespace Sudoku {
         return valid;
     }
 
-    void Application::save(Board const & board)
+    void Application::save(Board const & board) const
     {
         if (!args_.saveFilename().empty()) {
             if (args_.verbose()) {
@@ -125,7 +125,7 @@ namespace Sudoku {
         }
     }
 
-    void Application::print(Board const & board)
+    void Application::print(Board const & board) const
     {
         if (args_.pretty()) {
             prettyPrint(board);
