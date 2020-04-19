@@ -134,10 +134,10 @@ namespace Sudoku {
         }
         else {
             if (player.earlyTermination()) {
-                std::cout << "\nExisted puzzle, please try again" << std::endl;
+                std::cout << "\nExisted puzzle... see you later" << std::endl;
             }
             else {
-                std::cout << "\nFailed to solve puzzle, please try again" << std::endl;
+                std::cout << "\nFailed to solve puzzle... try again" << std::endl;
             }
         }
         save(board);
