@@ -1,5 +1,5 @@
 # sudoku
-Sudoku command line utility with support for solving, generating and checking sudoku puzzles.
+Sudoku command line utility with support for solving, generating, checking and playing sudoku puzzles.
 
 ## Examples
 ### Solve
