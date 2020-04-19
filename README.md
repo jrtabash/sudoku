@@ -12,6 +12,11 @@ sudoku solve -m iterative -p puzzles/example1.pzl
 sudoku generate -d medium
 ```
 
+### Play
+```bash
+sudoku play -b -p puzzles/example1.pzl
+```
+
 ### Check
 Check exit status is 0 if puzzle is correct, 1 otherwise.
 ```bash
