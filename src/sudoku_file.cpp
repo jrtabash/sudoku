@@ -1,7 +1,10 @@
 #include "sudoku_file.h"
 
+#include <filesystem>
 #include <fstream>
 #include <stdexcept>
+
+namespace fs = std::filesystem;
 
 namespace Sudoku {
 
@@ -59,13 +62,7 @@ namespace Sudoku {
 
     bool File::exists() const
     {
-        // return std::filesystem::exists(std::path(filename_));
-        std::ifstream ifs(filename_.c_str());
-        if (ifs.is_open()) {
-            ifs.close();
-            return true;
-        }
-        return false;
+        return fs::exists(fs::path(filename_));
     }
 
 }
