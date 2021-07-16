@@ -51,7 +51,7 @@ namespace Sudoku {
                   << '\t' << "-i       : Show row and column indexes with pretty print option\n"
                   << '\t' << "-w       : Allow Space when checking a puzzle\n"
                   << '\t' << "-b       : Allow bad / invalid moves when playing a puzzle\n"
-                  << '\t' << "-p <arg> : Read input puzzle / boad from given filename (required by solve and show)\n"
+                  << '\t' << "-p <arg> : Read input puzzle / board from given filename (required by solve and show)\n"
                   << '\t' << "-s <arg> : Save resulting puzzle / board to given filename (optional with solve and generate)\n"
                   << '\t' << "-m <arg> : Solver mode; one of " << modeListString() << " (optional with solve, default=" << Mode_Recursive << ")\n"
                   << '\t' << "-d <arg> : Generator difficulty level; one of " << difficultyListString() << " (optional with generate, default=" << Difficulty_Easy << ")\n"
